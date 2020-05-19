@@ -2113,10 +2113,10 @@ pre > span.copy-code:hover {
   font-weight: bold;
 }
 body {
-      background-color: #eee;
+      background-color: #e9ecef;
     }
     .nav-toggle .line {
-      background-color: #eee !important;
+      background-color: #e9ecef !important;
     }.header {
         width: 960px;
         margin: 0 auto;
@@ -2224,16 +2224,16 @@ body {
       color: #fc6423;
       border-bottom-color: #fc6423;
     }.bg-color {
-      background-color: #fffffffe;
+      background-color: #F6F6F6fe;
     }
     .site-meta {
-      background: #000 !important;
+      background: #868e96 !important;
     }
     .head-top-line {
-      background: #000;
+      background: #868e96;
     }
     .brand {
-      background: #000000fe;
+      background: #868e96fe;
     }
     .main-title, .brand {
       color: #FFF !important;
