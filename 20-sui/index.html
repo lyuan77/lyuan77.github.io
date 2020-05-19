@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
-<title>Hello Gridea | Lyuan&#39;s Blog</title>
+<title>20岁 | Lyuan&#39;s Blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1589856435183">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="Hello Gridea" />
-  <meta name="keywords" content="Gridea" />
+  <meta name="description" content="20岁" />
+  <meta name="keywords" content="随笔" />
 </head>
 
 <body>
@@ -188,8 +188,7 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            <div class="post-side-meta" id="post_side_meta">
-              
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -250,195 +249,6 @@
 
 
 </div>
-            </div>
-            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-              <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto"
-    id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
-</div>
-
-<script>
-
-  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
-  let active = 'active-show', activeClass = 'active-current';
-  let tocWrapper = document.querySelector('#toc_wrapper');
-  let tocContent = tocWrapper.children[0];
-  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
-
-  function addTocNumber(elem, deep) {
-    if (!elem) {
-      return;
-    }
-    let prop = elem.__proto__;
-
-    if (prop === HTMLUListElement.prototype) {
-      for (let i = 0; i < elem.children.length; i++) {
-        addTocNumber(elem.children[i], deep + (i + 1) + '.');
-      }
-    } else if (prop === HTMLLIElement.prototype) {
-      // 保存li元素
-      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
-        lList.push(elem);
-      }
-      for (let i = 0; i < elem.children.length; i++) {
-        let cur = elem.children[i];
-        if (cur.__proto__ === HTMLAnchorElement.prototype) {
-          if (autoNumber) {
-            cur.text = deep + ' ' + cur.text;
-          }
-        } else if (cur.__proto__ === HTMLUListElement.prototype) {
-          addTocNumber(cur, deep);
-        }
-      }
-    }
-  }
-
-  function removeParentActiveClass() {
-    let parents = tocContent.querySelectorAll('.' + active)
-    parents.forEach(function (elem) {
-      elem.classList.remove(active);
-    });
-  }
-
-  function addActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.add(activeClass);
-    }
-  }
-
-  function removeActiveClass(index) {
-    if (index >= 0 && index < hList.length) {
-      lList[index].classList.remove(activeClass);
-    }
-  }
-
-  function addActiveLiElemment(elem, parent) {
-    if (!elem || elem === parent) {
-      return;
-    } else {
-      if (elem.__proto__ === HTMLLIElement.prototype) {
-        elem.classList.add(active);
-      }
-      addActiveLiElemment(elem.parentElement, parent);
-    }
-  }
-
-  function showToc() {
-    if (tocWrapper) {
-      postBody = document.querySelector('#post_body');
-      for (let i = 0; i < postBody.children.length; i++) {
-        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-          hList.push(postBody.children[i]);
-        }
-      }
-      if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-      } else if (tocWrapper.classList.contains('no_compress')) {
-        tocContent.classList.add('expanded');
-      } else {
-        if (hList.length > 10) {
-          active = 'active-hidden'
-          tocContent.classList.add('closed');
-        } else {
-          tocContent.classList.add('expanded');
-        }
-      }
-    }
-  }
-
-  (function () {
-    // 处理不是从#一级标题开始目录
-    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
-      let con = tocContent.children[0].children[0];
-      tocContent.innerHTML = con.innerHTML;
-    }
-    let markdownItTOC = document.querySelector('.markdownIt-TOC');
-    let innerHeight = window.innerHeight;
-    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
-    addTocNumber(tocContent, '');
-  })();
-
-  document.addEventListener('scroll', function (e) {
-    if (lList.length <= 0) {
-      return;
-    }
-    let scrollTop = document.scrollingElement.scrollTop + 10;
-    let dir;
-
-    if (lastTop - scrollTop > 0) {
-      dir = 'up';
-    } else {
-      dir = 'down';
-    }
-
-    lastTop = scrollTop;
-    if (scrollTop <= 0) {
-      if (lastIndex >= 0 && lastIndex < hList.length) {
-        lList[lastIndex].classList.remove(activeClass);
-      }
-      return;
-    }
-
-    let current = 0, hasFind = false;
-    for (let i = 0; i < hList.length; i++) {
-      if (hList[i].offsetTop > scrollTop) {
-        current = i;
-        hasFind = true;
-        break;
-      }
-    }
-    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-      current = hList.length - 1;
-    } else {
-      current--;
-    }
-    if (dir === 'down') {
-      if (current > lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex)
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    } else {
-      if (current < lastIndex) {
-        addActiveClass(current);
-        removeActiveClass(lastIndex);
-        lastIndex = current;
-        removeParentActiveClass();
-        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
-      }
-    }
-  });
-
-
-  window.addEventListener('load', function () {
-    showToc();
-    document.querySelector('#sidebar').style = 'display: block;';
-    tocWrapper.classList.add('toc-active');
-    setTimeout(function () {
-      if ("createEvent" in document) {
-        let evt = document.createEvent("HTMLEvents");
-        evt.initEvent("scroll", false, true);
-        document.dispatchEvent(evt);
-      }
-      else {
-        document.fireEvent("scroll");
-      }
-    }, 500)
-  })
-
-</script>
-            </div>
           
         
       </div>
@@ -526,8 +336,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://qingchenbiubiu.github.io/hello-gridea/">
-      Hello Gridea
+    <a class="post-title-link" href="https://qingchenbiubiu.github.io/20-sui/">
+      20岁
     </a>
   </h1>
   <div class="post-meta">
@@ -535,7 +345,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span>2018-12-12</span>
+      <span>2020-05-19</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -544,8 +354,8 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://qingchenbiubiu.github.io/cRmHGpuTd/">
-        <span>Gridea</span>
+      <a href="https://qingchenbiubiu.github.io/BT7Q1OblM/">
+        <span>随笔</span>
       </a>
       
       
@@ -554,17 +364,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
+      <span>5<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1246<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/hello-gridea/" data-flag-title="Hello Gridea" class="meta-item pc-show leancloud_visitors">
+    <span id="/20-sui/" data-flag-title="20岁" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -573,27 +383,21 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+              <p>恍惚间我已经20岁了，真像做梦一样，我也觉得是时候做个总结与规划了。人皆有野心与欲望，然而这些东西只能憋在心里，在失意与落寞的时候才能拿出来做做白日梦，激励自己。今日且不说这些，我虽仍是少年，但要谈点实在的。</p>
+<p>过去的这20年，我真正遇到人生十字路口的机会有4次。它们分别在2014，2017，2018，2019。</p>
+<p>尤其这三年，从高中升入大学，再到面对大学玲琅满目的专业，一次次的机会摆在我的面前。而我珍惜的次数却很少。这是一直让我心中一直过意不去的地方，我不能说后悔，因为我不想否定过去，也不认为过去那几年我的所作所谓是错误的。</p>
+<p>人在年轻时总喜欢幻想，因为有未来可以期盼。我也是，但我痛恨这样的幻想。给人以希望，却又在未来让人亲眼看到这些幻想真的虚无缥缈。但是年少的热血沸腾，这就像人的欲望一样，无法遏制。</p>
+<p>我很普通，就连幻想也和大多人一样。有人说，人的成长就是一步步的看清现实，认知差距。时至今日，我成长了，稍微看到了现实，也认知到了差距。但我依旧觉得未来可期。</p>
+<p>为什么觉得未来仍可期？我认为这是我的世界观与价值观所决定的。一个人的世界观与价值观都是可以塑造的，但像我这样的万千普通人，我们的世界观与价值观又是怎么塑造的？一个是自身因素，一个则是社会因素。一个人若没有自身的思考，便只能随波逐流，深受社会因素的影响。而其人生观与价值观则易被破坏。</p>
+<p>未来可期，并不代表我不迷茫。时代有时代的桎梏，人生也有人生的桎梏。这20年真的太快太单一了，我并没有太多的经验和教训可以提取与总结。只能说有怨无悔，毕竟面对选择，我并没有交出让人满意的答卷。我羡慕一些朋友，但我也知道，那是他们的人生，那里也有属于他们独享的忧愁。</p>
+<p>我这回顾很随意吧？也确实没有什么可以谈的，过去真正属于我独立思考的时间并不多。但是这规划则不相同，我不想把这当作新的开始，因为这会让我的人生产生割裂感。我也不喜欢新的开始之类的谎言，在中华数千年的历史中，无论怎么改朝换代，它都不可能是一个新的开始。历史不具备割裂性质，历朝历代都是文明的延续，它和前朝都有着相同的本质。而我的人生也应当如此。</p>
+<p>人生的规划很难制定与施行，一方面在于诸多变数，一方面则在于实施者观念的改变。我无法规划长远之事，但凡事预则立，不预则废。我仔细思考未来5年内的可能面对的重要抉择，筛选下来则只有：「是否考取硕士学位」这一个重要的抉择。但对于这个选择，我并没有多余的选项，只有必考一个选项。我时常感慨：没有多余的选择往往是做好的选择。但一旦真的发生到了自己身上，却又有些万分无奈。</p>
+<p>既然方向确定，那如何前行，却让我颇压力。反思过去种种，我对课业的重视度不高，查漏补缺着实需要不少精力，幸时间尚且充沛。此外，为增加结局的满意度，我应该减少娱乐活动。计算机专业虽说并不有趣，但却是我自愿转的专业。平心而论我并不觉得枯燥无味。正所谓：「要想生受用，需下死工夫」，虽说没有优秀与卓越的品质，却应当有恒心与毅力。我讨厌鸡汤，努力应是人之常态，而鸡汤却让努力成为了一种奢侈品。</p>
+<p>虽说我可以在文中夸下海口，各种鸡汤承若信手拈来。但这不是我心中所愿，身为普通人，常常在上一秒化身奋斗逼，下一秒就克制不住的想娱乐放松自己。唯有陈述事实，简要的剖析自我，展示心中所想，才能让我看清自己未来与上限，才能更好地看清楚自我欺骗的惨淡与怨念。</p>
+<p>此篇不是结尾，而是我人生的开场白。写给自己，也写给我平凡的老爸老妈。</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<!-- more -->
+<!-- more -->
 
             </div>
             
@@ -605,7 +409,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://qingchenbiubiu.github.io/hello-gridea/" title="Hello Gridea">https://qingchenbiubiu.github.io/hello-gridea/</a>
+      <a href="https://qingchenbiubiu.github.io/20-sui/" title="20岁">https://qingchenbiubiu.github.io/20-sui/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -614,18 +418,22 @@
   </ul>
   <div class="tags">
     
-      <a href="https://qingchenbiubiu.github.io/cRmHGpuTd/"># Gridea</a>
+      <a href="https://qingchenbiubiu.github.io/BT7Q1OblM/"># 随笔</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="20岁" href="https://qingchenbiubiu.github.io/20-sui/">20岁</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="20岁" href="https://qingchenbiubiu.github.io/20-sui/">上一篇</a>
+        <a class="nav-pc-next" title="从 kindle 引发的思考" href="https://qingchenbiubiu.github.io/cong-kindle-yin-fa-de-si-kao/">从 kindle 引发的思考</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="从 kindle 引发的思考" href="https://qingchenbiubiu.github.io/cong-kindle-yin-fa-de-si-kao/">上一篇</a>
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Hello Gridea" href="https://qingchenbiubiu.github.io/hello-gridea/">Hello Gridea</a>
+        <a class="nav-mobile-next" title="Hello Gridea" href="https://qingchenbiubiu.github.io/hello-gridea/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
