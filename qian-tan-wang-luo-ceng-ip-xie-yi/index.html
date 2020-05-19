@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
-<title>20岁 | Lyuan&#39;s Blog</title>
+<title>浅谈网络层 IP 协议 | Lyuan&#39;s Blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1589879823209">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -48,8 +48,8 @@
 </script>
 
 
-  <meta name="description" content="20岁" />
-  <meta name="keywords" content="随笔" />
+  <meta name="description" content="浅谈网络层 IP 协议" />
+  <meta name="keywords" content="计算机网络" />
 </head>
 
 <body>
@@ -200,7 +200,8 @@
       <div class="sidebar-body gemini" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -264,6 +265,195 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-ip-%E5%9C%B0%E5%9D%80">什么是 IP 地址</a></li>
+<li><a href="#ip%E5%9C%B0%E5%9D%80%E5%A6%82%E4%BD%95%E5%88%86%E9%85%8D">IP地址如何分配</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-nat">什么是 NAT</a></li>
+<li><a href="#%E7%AB%AF%E5%8F%A3%E5%8F%B7">端口号</a></li>
+<li><a href="#%E7%AB%AF%E5%8F%A3%E5%8F%B7%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A">端口号如何确定</a></li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
       </div>
@@ -351,8 +541,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://qingchenbiubiu.github.io/20-sui/">
-      20岁
+    <a class="post-title-link" href="https://qingchenbiubiu.github.io/qian-tan-wang-luo-ceng-ip-xie-yi/">
+      浅谈网络层 IP 协议
     </a>
   </h1>
   <div class="post-meta">
@@ -369,8 +559,8 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://qingchenbiubiu.github.io/BT7Q1OblM/">
-        <span>随笔</span>
+      <a href="https://qingchenbiubiu.github.io/sjv3CWwxX/">
+        <span>计算机网络</span>
       </a>
       
       
@@ -379,17 +569,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>5<span class="language" data-lan="minute">分钟</span></span>
+      <span>7<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>1304<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1701<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/20-sui/" data-flag-title="20岁" class="meta-item pc-show leancloud_visitors">
+    <span id="/qian-tan-wang-luo-ceng-ip-xie-yi/" data-flag-title="浅谈网络层 IP 协议" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -398,23 +588,42 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>恰逢母亲节，看到身边的朋友都在跟母亲表白。但我是一个内向的人，不擅长表露自己的情感，所以就把自己一直想对父母的说的话写了下来</p>
-<!-- more -->
-<p>恍惚间我已经20岁了，真像做梦一样，我也觉得是时候做个总结与规划了。人皆有野心与欲望，然而这些东西只能憋在心里，在失意与落寞的时候才能拿出来做做白日梦，激励自己。今日且不说这些，我虽仍是少年，但要谈点实在的。</p>
-<p>过去的这20年，我真正遇到人生十字路口的机会有4次。它们分别在2014，2017，2018，2019。</p>
-<p>尤其这三年，从高中升入大学，再到面对大学玲琅满目的专业，一次次的机会摆在我的面前。而我珍惜的次数却很少。这是一直让我心中一直过意不去的地方，我不能说后悔，因为我不想否定过去，也不认为过去那几年我的所作所谓是错误的。</p>
-<p>人在年轻时总喜欢幻想，因为有未来可以期盼。我也是，但我痛恨这样的幻想。给人以希望，却又在未来让人亲眼看到这些幻想真的虚无缥缈。但是年少的热血沸腾，这就像人的欲望一样，无法遏制。</p>
-<p>我很普通，就连幻想也和大多人一样。有人说，人的成长就是一步步的看清现实，认知差距。时至今日，我成长了，稍微看到了现实，也认知到了差距。但我依旧觉得未来可期。</p>
-<p>为什么觉得未来仍可期？我认为这是我的世界观与价值观所决定的。一个人的世界观与价值观都是可以塑造的，但像我这样的万千普通人，我们的世界观与价值观又是怎么塑造的？一个是自身因素，一个则是社会因素。一个人若没有自身的思考，便只能随波逐流，深受社会因素的影响。而其人生观与价值观则易被破坏。</p>
-<p>未来可期，并不代表我不迷茫。时代有时代的桎梏，人生也有人生的桎梏。这20年真的太快太单一了，我并没有太多的经验和教训可以提取与总结。只能说有怨无悔，毕竟面对选择，我并没有交出让人满意的答卷。我羡慕一些朋友，但我也知道，那是他们的人生，那里也有属于他们独享的忧愁。</p>
-<p>我这回顾很随意吧？也确实没有什么可以谈的，过去真正属于我独立思考的时间并不多。但是这规划则不相同，我不想把这当作新的开始，因为这会让我的人生产生割裂感。我也不喜欢新的开始之类的谎言，在中华数千年的历史中，无论怎么改朝换代，它都不可能是一个新的开始。历史不具备割裂性质，历朝历代都是文明的延续，它和前朝都有着相同的本质。而我的人生也应当如此。</p>
-<p>人生的规划很难制定与施行，一方面在于诸多变数，一方面则在于实施者观念的改变。我无法规划长远之事，但凡事预则立，不预则废。我仔细思考未来5年内的可能面对的重要抉择，筛选下来则只有：「是否考取硕士学位」这一个重要的抉择。但对于这个选择，我并没有多余的选项，只有必考一个选项。我时常感慨：没有多余的选择往往是做好的选择。但一旦真的发生到了自己身上，却又有些万分无奈。</p>
-<p>既然方向确定，那如何前行，却让我颇压力。反思过去种种，我对课业的重视度不高，查漏补缺着实需要不少精力，幸时间尚且充沛。此外，为增加结局的满意度，我应该减少娱乐活动。计算机专业虽说并不有趣，但却是我自愿转的专业。平心而论我并不觉得枯燥无味。正所谓：「要想生受用，需下死工夫」，虽说没有优秀与卓越的品质，却应当有恒心与毅力。我讨厌鸡汤，努力应是人之常态，而鸡汤却让努力成为了一种奢侈品。</p>
-<p>虽说我可以在文中夸下海口，各种鸡汤承若信手拈来。但这不是我心中所愿，身为普通人，常常在上一秒化身奋斗逼，下一秒就克制不住的想娱乐放松自己。唯有陈述事实，简要的剖析自我，展示心中所想，才能让我看清自己未来与上限，才能更好地看清楚自我欺骗的惨淡与怨念。</p>
-<p>此篇不是结尾，而是我人生的开场白。写给自己，也写给我平凡的老爸老妈。</p>
-<!-- more -->
-<!-- more -->
-<!-- more -->
+              <p>计算机网络的章节设置总给我一种断片的感觉，看着理所当然，却无法道出个所以然来。写一些简单的东西来深化一下，顺便也想知道「网络究竟是怎样连接的」</p>
+<h1 id="什么是-ip-地址">什么是 IP 地址</h1>
+<p>对于 IP 协议，我们最了解的就是「IP 地址」了。那 IP 地址又是什么呢？</p>
+<p>在生活中，如果想要和朋友打电话，就需要知道对方的电话号码。此时的电话号码就是一个类似于地址的识别码，进行身份的标识。</p>
+<p>同理，在计算机的通信中，为了识别通信的对端，也必须有一个识别码进行身份的标识，这个识别码就是 IP 地址</p>
+<h1 id="ip地址如何分配">IP地址如何分配</h1>
+<p>那么问题来了，IP 地址是随意分配的吗？</p>
+<p>当然不是！互联网上的的任何一个主机或路由器都必须有一个唯一的 IP 地址。为了保持正常通信，需要为每个设备配置正确的 IP 地址。就目前的 IPV4 地址来说，它是由 32 位正整数来表示的，且在计算机内部以二进制方式被处理。形如: 00000000 . 00000000 . 00000000 . 00000000 ( 二进制 )</p>
+<p>我们可以得出 IP 地址的所有数目总共有约 43亿（2的32次方），但是 43 亿这个数目远远不够，因为 IP 地址不是根据主机台数来设置的。每台主机上的每块网卡都得设置 IP 地址。通常一块网卡只设置一个 IP 地址，但实际操作中并非这样。再者，路由器往往都会配置两个以上的网卡。</p>
+<p>所以这就导致了一个问题， IP 地址有着耗尽的危险。（2019 年 11 月 26 日 IPV4 地址耗尽）所以我们只为相应数量的设备分配唯一的 IP 地址，而不是每台主机或路由器都分配一个 IP 地址。这就涉及到了「全局地址和私有地址」。</p>
+<p>私有网络的 IP 地址范围：</p>
+<p>10.0.0.0 ~ 10.255.255.255（10/8） A 类</p>
+<p>172.16.0.0 ~ 172.31.255.255（172.16/12）B 类</p>
+<p>192.168.0.0 ~ 192.168.255.255 （192.168/16）C 类</p>
+<p>在此之外的 IP 地址称为全局 IP(公网 IP)，私有 IP 最初是无法连接到互联网的，在 NAT 技术诞生后，实现了私有地址的主机与全局地址的互联网主机的通信。私有 IP 也就可以通过这个技术接入互联网。（这里的主机是广义上的计算机，而非专指个人 PC）</p>
+<p>关于这一点，我们可以通过命令提示符的 ipconfig 命令来进行验证 ，查找的结果通常是 172 与192开头的，ipconfig 查询到的是我们的局域网内的 IP。</p>
+<h1 id="什么是-nat">什么是 NAT</h1>
+<p>前面我们提到了，连接到互联网的主机 IP 地址是不允许重复的。那私有地址的存在会不会打破这一规则呢？当然不会，私有 IP 地址连接到互联网需要 NAT 的帮助。目前的路由器都内置了 NAT 技术</p>
+<p>NAT 是如何工作的？首先假设一个场景</p>
+<p>一个局域网：有三台主机 A B C，和一台 NAT 路由器，三台主机的私有 IP 地址分别为：10.0.0.1，10.0.0.2，10.0.0.3。路由器则拥有一个全局 IP：202.244.174.37。</p>
+<p>外部的互联网：一个连接到互联网的服务器，全局 IP为：163.221.120.9。</p>
+<p>当局域网的一台主机 A 想要访问互联网时（比如访问某个网站），它会向目的主机（网站服务器）发送 IP 数据报。在数据报的首部会标识这样的一条信息：「目标地址：163.221.120.9，源地址：10.0.0.1」。当然，经过 NAT 路由器时会进行处理。处理后的信息为：「目标地址：163.221.120.9，源地址：202.244.174.37」，这个转换就是 NAT 技术实现的，反之亦然。这些转换都被记录到路由器的转换表中</p>
+<p>这里就引出了另外的问题：当局域网内同时有多个主机与外部进行通信时怎么办？</p>
+<p>我们不能仅仅依靠全局 IP 地址的转换，全局 IP 个数是有限的。所以需要在 IP 数据报中添加端口号。</p>
+<h1 id="端口号">端口号</h1>
+<p>那为什么要添加端口号？简单来说，是为了解决 NAT 转换时，全局 IP 地址不够用的问题。</p>
+<p>因为在传输层的 TCP 或 UDP 的通信中，只有「目标地址，源地址，目标端口，源端口和协议类型（TCP 或 UDP）都一致时才被认为是同一个通信连接」。</p>
+<p>比如下面两个就是两个不同的通信连接</p>
+<p><em>源 IP 地址：172.20.100.34  目标 IP 地址：172.20.100.32  TCP：6  源端口号：2001 目标端口号：80<br>
+源 IP 地址：172.20.100.34  目标 IP 地址：172.20.100.32  TCP：6  源端口号：2002 目标端口号：80</em></p>
+<p>在数据链路和 IP 中的地址，分别指的是 MAC 地址和 IP 地址。前者用来识别同一链路中的不同计算机，后者则用来识别 TCP/IP 网路中互联的主机与路由器。</p>
+<p>在传输层也有这种类似的概念，那就是端口号。端口号用来识别同一个计算机中进行通信的不同应用程序。</p>
+<p>举个例子，一台计算机上是可以同时运行多个程序的。每个程序都占用一个端口号，传输层协议利用这些端口号才能正确识别正在运行的应用程序，并准确的传输数据。</p>
+<h1 id="端口号如何确定">端口号如何确定</h1>
+<p>在实际进行通信时，每个应用程序都有指定的端口号，不可以随意使用。比如常见的 HTTP, FTP, SSH, TELNET 等广为使用的应用协议中所使用的端口号是固定的，这些端口号是标准既定的，范围一般在 0~1023之间。</p>
+<p>除此之外还可以动态分配，动态端口的范围从 49152 到 65535（也有一种说法是 1024 ~ 65535），这些端口号一般不固定分配给某个服务，也就是说许多服务都可以使用这些端口。只要运行的程序向系统提出访问网络的申请，那么系统就可以从这些端口号中分配一个供该程序使用。比如 1024 端口就是分配给第一个向系统发出申请的程序。在关闭程序进程后，就会释放所占用的端口号。</p>
 
             </div>
             
@@ -426,7 +635,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://qingchenbiubiu.github.io/20-sui/" title="20岁">https://qingchenbiubiu.github.io/20-sui/</a>
+      <a href="https://qingchenbiubiu.github.io/qian-tan-wang-luo-ceng-ip-xie-yi/" title="浅谈网络层 IP 协议">https://qingchenbiubiu.github.io/qian-tan-wang-luo-ceng-ip-xie-yi/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -435,21 +644,17 @@
   </ul>
   <div class="tags">
     
-      <a href="https://qingchenbiubiu.github.io/BT7Q1OblM/"># 随笔</a>
+      <a href="https://qingchenbiubiu.github.io/sjv3CWwxX/"># 计算机网络</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="从 kindle 引发的思考" href="https://qingchenbiubiu.github.io/cong-kindle-yin-fa-de-si-kao/">从 kindle 引发的思考</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="从 kindle 引发的思考" href="https://qingchenbiubiu.github.io/cong-kindle-yin-fa-de-si-kao/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Hello Gridea" href="https://qingchenbiubiu.github.io/hello-gridea/">Hello Gridea</a>
-        <a class="nav-mobile-next" title="Hello Gridea" href="https://qingchenbiubiu.github.io/hello-gridea/">下一篇</a>
+        <a class="nav-pc-next" title="从 kindle 引发的思考" href="https://qingchenbiubiu.github.io/cong-kindle-yin-fa-de-si-kao/">从 kindle 引发的思考</a>
+        <a class="nav-mobile-next" title="从 kindle 引发的思考" href="https://qingchenbiubiu.github.io/cong-kindle-yin-fa-de-si-kao/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

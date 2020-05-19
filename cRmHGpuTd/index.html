@@ -9,7 +9,7 @@
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
 <title>Lyuan&#39;s Blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1589878365509">
+<link rel="shortcut icon" href="/favicon.ico?v=1589879823209">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -203,19 +203,19 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">3</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-count">3</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-count">3</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -273,6 +273,10 @@
           <small class="language" data-lan="tag">标签</small>
         </h2>
       </div>
+      
+      
+      
+      
       
       
       
@@ -1040,6 +1044,47 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://qingchenbiubiu.github.io/qian-tan-wang-luo-ceng-ip-xie-yi/"" data-c="
+          &lt;p&gt;计算机网络的章节设置总给我一种断片的感觉，看着理所当然，却无法道出个所以然来。写一些简单的东西来深化一下，顺便也想知道「网络究竟是怎样连接的」&lt;/p&gt;
+&lt;h1 id=&#34;什么是-ip-地址&#34;&gt;什么是 IP 地址&lt;/h1&gt;
+&lt;p&gt;对于 IP 协议，我们最了解的就是「IP 地址」了。那 IP 地址又是什么呢？&lt;/p&gt;
+&lt;p&gt;在生活中，如果想要和朋友打电话，就需要知道对方的电话号码。此时的电话号码就是一个类似于地址的识别码，进行身份的标识。&lt;/p&gt;
+&lt;p&gt;同理，在计算机的通信中，为了识别通信的对端，也必须有一个识别码进行身份的标识，这个识别码就是 IP 地址&lt;/p&gt;
+&lt;h1 id=&#34;ip地址如何分配&#34;&gt;IP地址如何分配&lt;/h1&gt;
+&lt;p&gt;那么问题来了，IP 地址是随意分配的吗？&lt;/p&gt;
+&lt;p&gt;当然不是！互联网上的的任何一个主机或路由器都必须有一个唯一的 IP 地址。为了保持正常通信，需要为每个设备配置正确的 IP 地址。就目前的 IPV4 地址来说，它是由 32 位正整数来表示的，且在计算机内部以二进制方式被处理。形如: 00000000 . 00000000 . 00000000 . 00000000 ( 二进制 )&lt;/p&gt;
+&lt;p&gt;我们可以得出 IP 地址的所有数目总共有约 43亿（2的32次方），但是 43 亿这个数目远远不够，因为 IP 地址不是根据主机台数来设置的。每台主机上的每块网卡都得设置 IP 地址。通常一块网卡只设置一个 IP 地址，但实际操作中并非这样。再者，路由器往往都会配置两个以上的网卡。&lt;/p&gt;
+&lt;p&gt;所以这就导致了一个问题， IP 地址有着耗尽的危险。（2019 年 11 月 26 日 IPV4 地址耗尽）所以我们只为相应数量的设备分配唯一的 IP 地址，而不是每台主机或路由器都分配一个 IP 地址。这就涉及到了「全局地址和私有地址」。&lt;/p&gt;
+&lt;p&gt;私有网络的 IP 地址范围：&lt;/p&gt;
+&lt;p&gt;10.0.0.0 ~ 10.255.255.255（10/8） A 类&lt;/p&gt;
+&lt;p&gt;172.16.0.0 ~ 172.31.255.255（172.16/12）B 类&lt;/p&gt;
+&lt;p&gt;192.168.0.0 ~ 192.168.255.255 （192.168/16）C 类&lt;/p&gt;
+&lt;p&gt;在此之外的 IP 地址称为全局 IP(公网 IP)，私有 IP 最初是无法连接到互联网的，在 NAT 技术诞生后，实现了私有地址的主机与全局地址的互联网主机的通信。私有 IP 也就可以通过这个技术接入互联网。（这里的主机是广义上的计算机，而非专指个人 PC）&lt;/p&gt;
+&lt;p&gt;关于这一点，我们可以通过命令提示符的 ipconfig 命令来进行验证 ，查找的结果通常是 172 与192开头的，ipconfig 查询到的是我们的局域网内的 IP。&lt;/p&gt;
+&lt;h1 id=&#34;什么是-nat&#34;&gt;什么是 NAT&lt;/h1&gt;
+&lt;p&gt;前面我们提到了，连接到互联网的主机 IP 地址是不允许重复的。那私有地址的存在会不会打破这一规则呢？当然不会，私有 IP 地址连接到互联网需要 NAT 的帮助。目前的路由器都内置了 NAT 技术&lt;/p&gt;
+&lt;p&gt;NAT 是如何工作的？首先假设一个场景&lt;/p&gt;
+&lt;p&gt;一个局域网：有三台主机 A B C，和一台 NAT 路由器，三台主机的私有 IP 地址分别为：10.0.0.1，10.0.0.2，10.0.0.3。路由器则拥有一个全局 IP：202.244.174.37。&lt;/p&gt;
+&lt;p&gt;外部的互联网：一个连接到互联网的服务器，全局 IP为：163.221.120.9。&lt;/p&gt;
+&lt;p&gt;当局域网的一台主机 A 想要访问互联网时（比如访问某个网站），它会向目的主机（网站服务器）发送 IP 数据报。在数据报的首部会标识这样的一条信息：「目标地址：163.221.120.9，源地址：10.0.0.1」。当然，经过 NAT 路由器时会进行处理。处理后的信息为：「目标地址：163.221.120.9，源地址：202.244.174.37」，这个转换就是 NAT 技术实现的，反之亦然。这些转换都被记录到路由器的转换表中&lt;/p&gt;
+&lt;p&gt;这里就引出了另外的问题：当局域网内同时有多个主机与外部进行通信时怎么办？&lt;/p&gt;
+&lt;p&gt;我们不能仅仅依靠全局 IP 地址的转换，全局 IP 个数是有限的。所以需要在 IP 数据报中添加端口号。&lt;/p&gt;
+&lt;h1 id=&#34;端口号&#34;&gt;端口号&lt;/h1&gt;
+&lt;p&gt;那为什么要添加端口号？简单来说，是为了解决 NAT 转换时，全局 IP 地址不够用的问题。&lt;/p&gt;
+&lt;p&gt;因为在传输层的 TCP 或 UDP 的通信中，只有「目标地址，源地址，目标端口，源端口和协议类型（TCP 或 UDP）都一致时才被认为是同一个通信连接」。&lt;/p&gt;
+&lt;p&gt;比如下面两个就是两个不同的通信连接&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;源 IP 地址：172.20.100.34  目标 IP 地址：172.20.100.32  TCP：6  源端口号：2001 目标端口号：80&lt;br&gt;
+源 IP 地址：172.20.100.34  目标 IP 地址：172.20.100.32  TCP：6  源端口号：2002 目标端口号：80&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在数据链路和 IP 中的地址，分别指的是 MAC 地址和 IP 地址。前者用来识别同一链路中的不同计算机，后者则用来识别 TCP/IP 网路中互联的主机与路由器。&lt;/p&gt;
+&lt;p&gt;在传输层也有这种类似的概念，那就是端口号。端口号用来识别同一个计算机中进行通信的不同应用程序。&lt;/p&gt;
+&lt;p&gt;举个例子，一台计算机上是可以同时运行多个程序的。每个程序都占用一个端口号，传输层协议利用这些端口号才能正确识别正在运行的应用程序，并准确的传输数据。&lt;/p&gt;
+&lt;h1 id=&#34;端口号如何确定&#34;&gt;端口号如何确定&lt;/h1&gt;
+&lt;p&gt;在实际进行通信时，每个应用程序都有指定的端口号，不可以随意使用。比如常见的 HTTP, FTP, SSH, TELNET 等广为使用的应用协议中所使用的端口号是固定的，这些端口号是标准既定的，范围一般在 0~1023之间。&lt;/p&gt;
+&lt;p&gt;除此之外还可以动态分配，动态端口的范围从 49152 到 65535（也有一种说法是 1024 ~ 65535），这些端口号一般不固定分配给某个服务，也就是说许多服务都可以使用这些端口。只要运行的程序向系统提出访问网络的申请，那么系统就可以从这些端口号中分配一个供该程序使用。比如 1024 端口就是分配给第一个向系统发出申请的程序。在关闭程序进程后，就会释放所占用的端口号。&lt;/p&gt;
+">浅谈网络层 IP 协议</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://qingchenbiubiu.github.io/guan-yu/"" data-c="
