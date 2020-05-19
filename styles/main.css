@@ -2113,10 +2113,10 @@ pre > span.copy-code:hover {
   font-weight: bold;
 }
 body {
-      background-color: #e9ecef;
+      background-color: #F6F6F6;
     }
     .nav-toggle .line {
-      background-color: #e9ecef !important;
+      background-color: #F6F6F6 !important;
     }.header {
         width: 960px;
         margin: 0 auto;
@@ -2224,7 +2224,7 @@ body {
       color: #fc6423;
       border-bottom-color: #fc6423;
     }.bg-color {
-      background-color: #F6F6F6fe;
+      background-color: #F8F8F5fe;
     }
     .site-meta {
       background: #868e96 !important;
