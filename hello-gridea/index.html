@@ -9,7 +9,7 @@
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
 <title>Hello Gridea | Lyuan&#39;s Blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1589871786025">
+<link rel="shortcut icon" href="/favicon.ico?v=1589872942137">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -637,7 +637,53 @@
 </div>
             
             
-  
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'f5LabVv8MK1K4B42fxo0J4Sa-gzGzoHsz',
+    appKey: 'zD7ThddQ6fSgxsea6UgIjDjl',
+    avatar: 'mp',
+    placeholder: '',
+    pageSize: '15',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
 
           </div>
         </div>
@@ -667,7 +713,7 @@
     
 <link rel="stylesheet" href="/media/live2d/css/live2d.css" />
 <div class="box-scale">
-  <div id="landlord" style="left: 5px;bottom: px;"
+  <div id="landlord" style="left: 0.8px;bottom: px;"
     data-key="">
     <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
     
@@ -1146,7 +1192,7 @@
 		}
 		$(document).ready(function () {
 			var AIimgSrc = [];
-			let chooseLive2d = 'hijiki'
+			let chooseLive2d = 'tororo'
 			if (chooseLive2d === 'histoire') {
 				AIimgSrc.push(message_Path + "model/histoire/histoire.1024/texture_00.png");
 				AIimgSrc.push(message_Path + "model/histoire/histoire.1024/texture_01.png");
