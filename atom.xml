@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lyuan77.github.io</id>
     <title>Lyuan&apos;s Blog</title>
-    <updated>2020-05-20T03:51:37.834Z</updated>
+    <updated>2020-05-20T07:04:17.162Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lyuan77.github.io"/>
     <link rel="self" href="https://lyuan77.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://lyuan77.github.io/images/avatar.png</logo>
     <icon>https://lyuan77.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Lyuan&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[从阅文霸王合同来看签约作者现状]]></title>
+        <id>https://lyuan77.github.io/cong-yue-wen-ba-wang-he-tong-lai-kan-qian-yue-zuo-zhe-xian-zhuang/</id>
+        <link href="https://lyuan77.github.io/cong-yue-wen-ba-wang-he-tong-lai-kan-qian-yue-zuo-zhe-xian-zhuang/">
+        </link>
+        <updated>2020-05-20T07:02:25.000Z</updated>
+        <summary type="html"><![CDATA[<p>腾讯的背水一战？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>腾讯的背水一战？</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[浅谈网络层 IP 协议]]></title>
         <id>https://lyuan77.github.io/qian-tan-wang-luo-ceng-ip-xie-yi/</id>
