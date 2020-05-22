@@ -2237,13 +2237,13 @@ body {
       background: #F8F8F5;
     }
     .brand {
-      background: #868e96fe;
+      background: #F8F8F5fe;
     }
     .main-title, .brand {
-      color: #FFF !important;
+      color: #212529 !important;
     }
     .mist .site-title i {
-      background: #FFFFFFfe;
+      background: #212529fe;
     }.box-scale > #landlord {
       transform: scale(0.9);
     }.box-shadow-wrapper {
