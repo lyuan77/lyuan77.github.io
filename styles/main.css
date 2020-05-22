@@ -2178,15 +2178,11 @@ body {
     .next-md-body a:hover, .friends-box a:hover {
       color: #222;
       border-bottom-color: #222;
-    }.nav-item a {
-        color: #555;
-      }
-      .nav-item-active a {
-        color: #555;
-        border-bottom: 1px solid #555 !important;
+    }
+      .nav-item a {
+        color:  #555;
       }.nav-item a:hover {
         color: #222;
-        border-bottom: 1px solid #222 !important;
       }.nav-item-active {
       background: #f9f9f9fe;
     }
@@ -2231,19 +2227,19 @@ body {
       background-color: #F8F8F5fe;
     }
     .site-meta {
-      background: #F8F8F5 !important;
+      background: #212529 !important;
     }
     .head-top-line {
-      background: #F8F8F5;
+      background: #212529;
     }
     .brand {
-      background: #F8F8F5fe;
+      background: #212529fe;
     }
     .main-title, .brand {
-      color: #212529 !important;
+      color: #f8f9fa !important;
     }
     .mist .site-title i {
-      background: #212529fe;
+      background: #f8f9fafe;
     }.box-scale > #landlord {
       transform: scale(0.9);
     }.box-shadow-wrapper {
