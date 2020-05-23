@@ -2227,19 +2227,19 @@ body {
       background-color: #F8F8F5fe;
     }
     .site-meta {
-      background: #212529 !important;
+      background: #F8F8F5 !important;
     }
     .head-top-line {
-      background: #212529;
+      background: #F8F8F5;
     }
     .brand {
       background: #212529fe;
     }
     .main-title, .brand {
-      color: #f8f9fa !important;
+      color: #212529 !important;
     }
     .mist .site-title i {
-      background: #f8f9fafe;
+      background: #212529fe;
     }.box-scale > #landlord {
       transform: scale(0.9);
     }.box-shadow-wrapper {
