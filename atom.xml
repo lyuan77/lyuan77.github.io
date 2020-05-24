@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lyuan77.github.io</id>
     <title>绘心</title>
-    <updated>2020-05-23T02:39:50.216Z</updated>
+    <updated>2020-05-24T15:37:05.266Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lyuan77.github.io"/>
     <link rel="self" href="https://lyuan77.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://lyuan77.github.io/images/avatar.png</logo>
     <icon>https://lyuan77.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 绘心</rights>
+    <entry>
+        <title type="html"><![CDATA[浅谈网盘]]></title>
+        <id>https://lyuan77.github.io/qian-tan-wang-pan/</id>
+        <link href="https://lyuan77.github.io/qian-tan-wang-pan/">
+        </link>
+        <updated>2020-05-24T15:34:58.000Z</updated>
+        <summary type="html"><![CDATA[<p>从上帝视角来看网盘的发展，你会发现一些有意思的事情</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>从上帝视角来看网盘的发展，你会发现一些有意思的事情</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[从阅文霸王合同来看签约作者现状]]></title>
         <id>https://lyuan77.github.io/cong-yue-wen-ba-wang-he-tong-lai-kan-qian-yue-zuo-zhe-xian-zhuang/</id>
