@@ -2211,26 +2211,26 @@ body {
       color: #868e96;
       border-bottom-color: #868e96;
     }.markdownIt-TOC a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
+      color: #343a40;
+      border-bottom-color: #343a40;
     }.active-current > a {
-      color: #fc6423 !important;
-      border-bottom-color: #fc6423 !important;
+      color: #495057 !important;
+      border-bottom-color: #495057 !important;
     }
     .sidebar-title-active {
-      color: #fc6423 !important;
-      border-bottom-color: #fc6423 !important;
+      color: #495057;
+      border-bottom-color: #495057;
     }
     .sidebar-title-item:hover {
-      color: #fc6423 !important;
+      color: #495057 !important;
     }
     .active-show > a {
-      color: #fc6423;
-      border-bottom-color: #fc6423;
+      color: #495057;
+      border-bottom-color: #495057;
     }
     .active-hidden > a {
-      color: #fc6423;
-      border-bottom-color: #fc6423;
+      color: #495057;
+      border-bottom-color: #495057;
     }.bg-color {
       background-color: #F8F8F5fe;
     }
