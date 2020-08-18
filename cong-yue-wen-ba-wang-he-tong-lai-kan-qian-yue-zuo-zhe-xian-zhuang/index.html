@@ -9,7 +9,7 @@
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#F8F8F5">
 <title>从阅文霸王合同来看签约作者现状 | 绘心</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1597670276276">
+<link rel="shortcut icon" href="/favicon.ico?v=1597715731213">
 <link rel="stylesheet" href="/media/css/mist.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -224,19 +224,19 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">7</span>
+        <span class="site-item-stat-count">8</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">3</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">3</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -742,6 +742,96 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://lyuan77.github.io/guan-yu-python-luo-ji-yun-suan-fu/"" data-c="
+          &lt;p&gt;遇到的问题&lt;br&gt;
+今天做题的时候，碰到一个关于逻辑运算符优先级的问题，看到之后我懵了。&lt;/p&gt;
+&lt;!-- more --&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;    0 and 1 
+    2 and 3
+    0 or 1
+    2 or 3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;上面的返回值是什么？
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我一开始以为返回的都是左边的值，但是结果和我想的不同，结果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;In : 0 and 1
+Out: 0
+
+In : 2 and 3
+Out: 3
+
+In : 0 or 1
+Out: 1
+
+In : 2 or 3
+Out: 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;为什么 0 and 1 返回的是 0 , 而2 and 3却返回的是3？&lt;/p&gt;
+&lt;p&gt;为什么 0 or 1 返回的是 1 , 而 2 or 3却返回的是2？&lt;/p&gt;
+&lt;p&gt;经过我不断地额翻阅资料，我找到了答案。&lt;/p&gt;
+&lt;p&gt;首先要明白以下2点：&lt;/p&gt;
+&lt;p&gt;逻辑运算符的优先级：not &amp;gt; and &amp;gt; or&lt;/p&gt;
+&lt;p&gt;Python中所有的空字符串都是假，非空字符串都是真，非零的数字都是真&lt;/p&gt;
+&lt;p&gt;关于and：&lt;/p&gt;
+&lt;p&gt;只要左边的表达式为真，那么整个表达式返回的是右边表达式的值，否则返回的是左边表达式的值&lt;/p&gt;
+&lt;p&gt;换言之，x and y 的值只能是x 和 y，x为真时就是y，x为假就是x，示例如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;  In [1]: x=1
+
+  In [2]: y=2
+
+  In [3]: x and y
+  Out[3]: 2
+
+  In [4]: x=0
+  
+  In [5]: y=1
+
+  In [6]: x and y
+  Out[6]: 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;关于or：&lt;/p&gt;
+&lt;p&gt;只要两边的表达式都为真，整个表达式的结果返回的是左边表达式的值；&lt;/p&gt;
+&lt;p&gt;如果一真一假，返回真值表达式的值；&lt;/p&gt;
+&lt;p&gt;如果两个值都假，比如空值和0，返回的是右边的值&lt;/p&gt;
+&lt;p&gt;换言之，x or y 的值只可能是 x 和 y，x为真就是x，x为假就是y，示例如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;  In [7]: x=1
+
+  In [8]: y=0
+
+  In [9]: x or y
+  Out[9]: 1
+
+  In [10]: x=&#39;hello&#39;
+
+  In [11]: y=&#39;world&#39;
+
+  In [12]: x or y
+  Out[12]: &#39;hello&#39;
+
+  In [13]: x=&#39;&#39;
+
+  In [14]: y=0
+
+  In [15]: x or y
+  Out[15]: 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;关于not：&lt;/p&gt;
+&lt;p&gt;x为真，则输出False&lt;br&gt;
+x为假，则输出True&lt;br&gt;
+当not和and及or在一起运算时，优先级为是not&amp;gt;and&amp;gt;or，下面来看下3个逻辑运算符一起使用的结果：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;In [18]: (5&amp;gt;3) and (2&amp;gt;4) or not 6&amp;lt;7
+Out[18]: False
+
+In [19]: (5&amp;gt;3) and (2&amp;lt;4) or not 6&amp;lt;7
+Out[19]: True
+
+In [20]: (5&amp;gt;3) and (2&amp;lt;4) or not 6&amp;gt;7
+Out[20]: True
+&lt;/code&gt;&lt;/pre&gt;
+">关于 python 逻辑运算符</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://lyuan77.github.io/guan-yu-yuan-zhu-bi-de-na-xie-shi-er/"" data-c="
